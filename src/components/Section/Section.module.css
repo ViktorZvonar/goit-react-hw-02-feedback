@@ -1,0 +1,9 @@
+ul {
+  padding: 0px;
+  display: flex;
+  list-style: none;
+}
+
+.btn:not(:last-child) {
+  margin-right: 10px;
+}

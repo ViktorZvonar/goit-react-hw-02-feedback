@@ -1,7 +1,9 @@
 import { Component } from 'react';
 
 import Section from './Section/Section';
+import FeedbackOptions from './FeedbackOptions/FeedbackOptions';
 import Statistics from './Statistics/Statistics';
+import Notification from './Notification/Notification';
 
 class App extends Component {
   state = {
@@ -12,7 +14,6 @@ class App extends Component {
 
   onClick = name => {
     this.setState(prevState => {
-      // console.log(prevState);
       return {
         [name]: prevState[name] + 1,
       };
@@ -28,9 +29,7 @@ class App extends Component {
       return;
     }
 
-    return Number(
-      ((Number(this.state.good) * 100) / this.countTotalClicks()).toFixed()
-    );
+    return Math.round((this.state.good * 100) / this.countTotalClicks());
   };
 
   render() {
@@ -44,20 +43,25 @@ class App extends Component {
           color: '#010101',
         }}
       >
-        <Section
-          title="Please leave feedback"
-          options={this.state}
-          onClick={this.onClick}
-        ></Section>
-
-        <Statistics
-          title="Statistics"
-          good={good}
-          neutral={neutral}
-          bad={bad}
-          totalClicks={this.countTotalClicks()}
-          positiveClicks={this.countPositiveClicks()}
-        />
+        <Section title="Please leave feedback">
+          <FeedbackOptions
+            options={this.state}
+            onClick={this.onClick}
+          ></FeedbackOptions>
+        </Section>
+        <Section title="Statistics">
+          {this.countTotalClicks() > 0 ? (
+            <Statistics
+              good={good}
+              neutral={neutral}
+              bad={bad}
+              totalClicks={this.countTotalClicks()}
+              positiveClicks={this.countPositiveClicks()}
+            ></Statistics>
+          ) : (
+            <Notification message="There is no feedback" />
+          )}
+        </Section>
       </div>
     );
   }

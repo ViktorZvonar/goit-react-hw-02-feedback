@@ -34,6 +34,7 @@ class App extends Component {
 
   render() {
     const { good, neutral, bad } = this.state;
+    const options = Object.keys(this.state);
 
     return (
       <div
@@ -45,7 +46,7 @@ class App extends Component {
       >
         <Section title="Please leave feedback">
           <FeedbackOptions
-            options={this.state}
+            options={options}
             onClick={this.onClick}
           ></FeedbackOptions>
         </Section>
